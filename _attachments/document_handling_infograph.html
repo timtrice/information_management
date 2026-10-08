@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>25I0007 Document Handling Process for 25I0007 (SCI/Fluor)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .process-flow {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .source-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .source-box h3 {
+            margin: 0 0 15px 0;
+            color: #007bff;
+            font-size: 1.2em;
+        }
+        
+        .pathway {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .pathway-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid;
+            position: relative;
+        }
+        
+        .controlled {
+            border-left-color: #28a745;
+        }
+        
+        .uncontrolled {
+            border-left-color: #dc3545;
+        }
+        
+        .pathway-card h4 {
+            margin: 0 0 15px 0;
+            font-size: 1.1em;
+        }
+        
+        .controlled h4 {
+            color: #28a745;
+        }
+        
+        .uncontrolled h4 {
+            color: #dc3545;
+        }
+        
+        .pathway-details {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .destination-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 5px solid #6c757d;
+        }
+        
+        .destination-box h3 {
+            margin: 0 0 15px 0;
+            color: #6c757d;
+            font-size: 1.2em;
+        }
+        
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: #007bff;
+            margin: 10px 0;
+        }
+        
+        .issues-section {
+            background: #fff3cd;
+            border: 2px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .issues-section h3 {
+            color: #856404;
+            margin: 0 0 20px 0;
+            font-size: 1.3em;
+        }
+        
+        .issue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .issue-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #fd79a8;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+        
+        .controlled-color { background: #28a745; }
+        .uncontrolled-color { background: #dc3545; }
+        
+        .key-definitions {
+            background: #e3f2fd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .key-definitions h4 {
+            margin: 0 0 15px 0;
+            color: #1976d2;
+        }
+        
+        .definition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .definition-item {
+            font-size: 0.9em;
+        }
+        
+        .definition-item strong {
+            color: #1976d2;
+        }
+        
+        @media (max-width: 768px) {
+            .process-flow {
+                grid-template-columns: 1fr;
+            }
+            
+            .legend {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Document Handling Process for 25I0007 (SCI/Fluor)</h1>
+            <p>Current State Overview for PORs</p>
+        </div>
+        
+        <div class="content">
+            <div class="process-flow">
+                <div class="source-box">
+                    <h3>Document Sources</h3>
+                    <ul style="margin: 0; padding-left: 20px;">
+                        <li><strong>SCI EDMS</strong> (Outbound folder)</li>
+                        <li><strong>SCI EDMS</strong> ("Bootleg" folder)</li>
+                        <li><strong>Email</strong> (SCI/Fluor)</li>
+                    </ul>
+                </div>
+                
+                <div class="pathway">
+                    <div class="pathway-card controlled">
+                        <h4>🟢 CONTROLLED DOCUMENTS</h4>
+                        <div class="pathway-details">
+                            <strong>Source:</strong> SCI EDMS with transmittal form<br>
+                            <strong>Processing:</strong> Assigned transmittal number<br>
+                            <strong>Storage:</strong> Hanson EDMS "Documents" folder + Network Drive "17-Deliverables"<br>
+                            <strong>Status:</strong> "Sole source of truth"<br>
+                            <strong>Metadata:</strong> Captured from transmittal form<br>
+                            <strong>Revision History:</strong> ✅ Maintained
+                        </div>
+                    </div>
+                    
+                    <div class="pathway-card uncontrolled">
+                        <h4>🔴 UNCONTROLLED DOCUMENTS</h4>
+                        <div class="pathway-details">
+                            <strong>Source:</strong> SCI EDMS "Bootleg" folder OR Email<br>
+                            <strong>Processing:</strong> Assigned EML document number (25I0007-SCI-EML-####)<br>
+                            <strong>Storage:</strong> Network Drive "6-Correspondence"<br>
+                            <strong>Status:</strong> Correspondence only<br>
+                            <strong>Metadata:</strong> ❌ Not captured electronically<br>
+                            <strong>Revision History:</strong> ❌ Not maintained
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-box">
+                    <h3>Final Storage</h3>
+                    <div style="margin-bottom: 15px;">
+                        <strong>Controlled:</strong><br>
+                        • Hanson EDMS<br>
+                        • Network Drive (17-Deliverables)
+                    </div>
+                    <div>
+                        <strong>Uncontrolled:</strong><br>
+                        • Network Drive (6-Correspondence)
+                    </div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color controlled-color"></div>
+                    <span><strong>Controlled Documents</strong> - Proper transmittal process</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color uncontrolled-color"></div>
+                    <span><strong>Uncontrolled Documents</strong> - Email/Bootleg folder</span>
+                </div>
+            </div>
+            
+            <div class="issues-section">
+                <h3>⚠️ Current Issues & Risk Factors</h3>
+                <div class="issue-grid">
+                    <div class="issue-item">
+                        <strong>Mixed Document Status</strong><br>
+                        Same document may exist as both Controlled and Uncontrolled, potentially with different revisions
+                    </div>
+                    <div class="issue-item">
+                        <strong>No Metadata Definitions</strong><br>
+                        Codes like "A1", "B1", "B2" used but meanings unknown (SCI denied information management documentation)
+                    </div>
+                    <div class="issue-item">
+                        <strong>No POR Mapping</strong><br>
+                        Cannot map Professional of Record to discipline/document type combinations
+                    </div>
+                    <div class="issue-item">
+                        <strong>Version Control Gaps</strong><br>
+                        Uncontrolled documents may have later revisions than Controlled documents - no tracking system in place
+                    </div>
+                    <div class="issue-item">
+                        <strong>Quality Control Breakdown</strong><br>
+                        Email submissions bypass industry-standard ISO procedures
+                    </div>
+                    <div class="issue-item">
+                        <strong>SCI Instruction Override</strong><br>
+                        Despite raised concerns, SCI instructed to continue current process
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; margin-top: 20px; border-left: 5px solid #17a2b8;">
+                <h4 style="color: #17a2b8; margin: 0 0 15px 0;">👤 POR Responsibility</h4>
+                <p style="margin: 0; font-size: 0.95em;">
+                    <strong>Professional of Record (POR)</strong> must validate Uncontrolled documents against Controlled documents. 
+                    Any discrepancies should be raised with SCI. However, DC lacks proper mapping tools to streamline this process.
+                </p>
+            </div>
+            
+            <div class="key-definitions">
+                <h4>Key Definitions</h4>
+                <div class="definition-grid">
+                    <div class="definition-item">
+                        <strong>EDMS:</strong> Electronic Document Management System
+                    </div>
+                    <div class="definition-item">
+                        <strong>DC:</strong> Document Control
+                    </div>
+                    <div class="definition-item">
+                        <strong>POR:</strong> Professional of Record
+                    </div>
+                    <div class="definition-item">
+                        <strong>EML Format:</strong>25I0007-SCI-EML-0000<br>
+                        (Project-SCI-FileType-Sequence)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

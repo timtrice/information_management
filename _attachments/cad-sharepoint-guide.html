@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAD Drawing Review Guide - SharePoint Process</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .container { max-width: 100%; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: white;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #c41e3a 0%, #7c1224 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header .subtitle {
+            margin-top: 5px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .version-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            background: #f8f9fa;
+            padding: 25px;
+        }
+        
+        .workflow-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .workflow-title {
+            color: #c41e3a;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 180px;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .workflow-step:hover {
+            border-color: #c41e3a;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.2);
+        }
+        
+        .workflow-step.cad-step {
+            background: #fff4e6;
+            border-color: #ff9800;
+        }
+        
+        .workflow-step.pdf-step {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .workflow-step.review-step {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        .step-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .step-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .step-detail {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: -25px;
+            transform: translateY(-50%);
+            color: #c41e3a;
+            font-size: 20px;
+            z-index: 1;
+        }
+        
+        .process-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            color: #c41e3a;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+            background: #ffe6ea;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .column-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #c41e3a;
+        }
+        
+        .column-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .file-structure {
+            background: #263238;
+            color: #aed581;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin: 10px 0;
+            white-space: pre;
+            line-height: 1.6;
+        }
+        
+        .file-structure .folder {
+            color: #64b5f6;
+        }
+        
+        .file-structure .file-cad {
+            color: #ffb74d;
+            margin-left: 20px;
+        }
+        
+        .file-structure .file-pdf {
+            color: #81c784;
+            margin-left: 20px;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .checklist li {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f5f5f5;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .checklist li:before {
+            content: '☑';
+            color: #4caf50;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box strong {
+            color: #e65100;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box strong {
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .ref-card {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 3px solid #c41e3a;
+        }
+        
+        .ref-card-title {
+            font-weight: 600;
+            color: #c41e3a;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .ref-card-content {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .ref-card-content code {
+            background: #e0e0e0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #64b5f6;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .two-column, .quick-reference {
+                grid-template-columns: 1fr;
+            }
+            .workflow-steps {
+                flex-direction: column;
+            }
+            .arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📐 CAD Drawing Review in SharePoint</h1>
+            <div class="subtitle">Simplified Process for DWG, DXF, and Other CAD Files</div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Visual Workflow -->
+            <div class="workflow-diagram">
+                <div class="workflow-title">🔄 THE CAD REVIEW WORKFLOW AT A GLANCE</div>
+                <div class="workflow-steps">
+                    <div class="workflow-step cad-step">
+                        <div class="step-icon">🎨</div>
+                        <div class="step-label">1. DESIGN</div>
+                        <div class="step-detail">Create/update in AutoCAD, Revit, SolidWorks, etc.</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step pdf-step">
+                        <div class="step-icon">📄</div>
+                        <div class="step-label">2. EXPORT</div>
+                        <div class="step-detail">Plot to PDF<br>(full size, color)</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-icon">☁️</div>
+                        <div class="step-label">3. UPLOAD</div>
+                        <div class="step-detail">Both files to SharePoint folders</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step review-step">
+                        <div class="step-icon">✍️</div>
+                        <div class="step-label">4. REVIEW</div>
+                        <div class="step-detail">Markup PDF, check QA items</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-icon">✅</div>
+                        <div class="step-label">5. APPROVE</div>
+                        <div class="step-detail">Digital approval & transmittal</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- File Organization -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">📁</span>
+                    How to Organize Your CAD Files in SharePoint
+                </div>
+                
+                <div class="file-structure">
+📁 Project XYZ-2025
+    📁 01_Working_Drawings
+        📊 A-101_FloorPlan_Rev2.dwg
+        📄 A-101_FloorPlan_Rev2_REVIEW.pdf
+    📁 02_Approved_Drawings
+        📊 A-101_FloorPlan_Rev1.dwg
+        📄 A-101_FloorPlan_Rev1_APPROVED.pdf
+    📁 03_Superseded
+        📊 A-101_FloorPlan_Rev0.dwg
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ CRITICAL RULE:</strong>
+                    Always upload BOTH the native CAD file (.dwg) AND the PDF export. The CAD file is for record-keeping, the PDF is for review and approval.
+                </div>
+            </div>
+            
+            <!-- Two Column Section -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">👥</span>
+                    Step-by-Step Instructions
+                </div>
+                
+                <div class="two-column">
+                    <div class="column-section">
+                        <div class="column-title">
+                            <span>🎨</span> FOR DESIGNERS/DRAFTERS
+                        </div>
+                        
+                        <ol style="margin: 10px 0; padding-left: 20px; font-size: 14px;">
+                            <li><strong>Finish your drawing</strong> in CAD software</li>
+                            <li><strong>Plot to PDF:</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Use "DWG to PDF.pc3" plotter</li>
+                                    <li>Select "Full Size" (not "Fit to Page")</li>
+                                    <li>Include layers & lineweights</li>
+                                </ul>
+                            </li>
+                            <li><strong>Name your files:</strong><br>
+                                <code>[Drawing#]_[Title]_Rev[#]</code></li>
+                            <li><strong>Upload to SharePoint:</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>DWG → Working_Drawings folder</li>
+                                    <li>PDF → Same folder, add "_REVIEW"</li>
+                                </ul>
+                            </li>
+                            <li><strong>Add metadata</strong> when prompted:
+                                <ul style="margin: 5px 0;">
+                                    <li>Drawing Number</li>
+                                    <li>Revision</li>
+                                    <li>Scale</li>
+                                    <li>Select Reviewer from dropdown</li>
+                                </ul>
+                            </li>
+                            <li><strong>Auto-notification</strong> sent to reviewer!</li>
+                        </ol>
+                        
+                        <div class="tip-box">
+                            <strong>💡 PRO TIP:</strong>
+                            Create a PDF preset in AutoCAD for consistent exports. Save as "SharePoint Review" for one-click plotting.
+                        </div>
+                    </div>
+                    
+                    <div class="column-section">
+                        <div class="column-title">
+                            <span>✍️</span> FOR REVIEWERS/APPROVERS
+                        </div>
+                        
+                        <ol style="margin: 10px 0; padding-left: 20px; font-size: 14px;">
+                            <li><strong>Click link in email</strong> notification</li>
+                            <li><strong>PDF opens</strong> in browser (or download for detailed review)</li>
+                            <li><strong>Review using PDF tools:</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Add comments/clouds</li>
+                                    <li>Measure dimensions (if needed)</li>
+                                    <li>Check against standards</li>
+                                </ul>
+                            </li>
+                            <li><strong>Complete QA checklist</strong> (appears automatically):
+                                <ul class="checklist" style="margin-left: -10px;">
+                                    <li>Title block information correct</li>
+                                    <li>Scale and dimensions verified</li>
+                                    <li>Drawing standards compliance</li>
+                                    <li>Cross-references checked</li>
+                                    <li>Revision clouds present (if applicable)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Click "Approve"</strong> or <strong>"Needs Revision"</strong></li>
+                            <li><strong>System records</strong> your review automatically</li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ REMEMBER:</strong>
+                            You're reviewing the PDF, not the CAD file. If you need to check something in CAD, download the DWG separately.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Reference Cards -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">⚡</span>
+                    Quick Reference Cards
+                </div>
+                
+                <div class="quick-reference">
+                    <div class="ref-card">
+                        <div class="ref-card-title">🔍 Finding Drawings</div>
+                        <div class="ref-card-content">
+                            <strong>By Drawing Number:</strong><br>
+                            Use search box, type drawing number<br><br>
+                            <strong>By Status:</strong><br>
+                            Filter view to "Pending Review" or "Approved"<br><br>
+                            <strong>By Date:</strong><br>
+                            Sort by "Modified" column
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">📏 File Size Limits</div>
+                        <div class="ref-card-content">
+                            <strong>Maximum file size:</strong> 250MB<br>
+                            <strong>If file is too large:</strong><br>
+                            • Purge unused blocks in CAD<br>
+                            • Use ZIP for multiple files<br>
+                            • Contact IT for large models<br><br>
+                            <strong>Typical sizes:</strong><br>
+                            DWG: 5-50MB | PDF: 1-10MB
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">🔄 Revision Process</div>
+                        <div class="ref-card-content">
+                            <strong>After reviewer comments:</strong><br>
+                            1. Download marked-up PDF<br>
+                            2. Update CAD drawing<br>
+                            3. Increment revision (Rev2 → Rev3)<br>
+                            4. Upload new DWG + PDF<br>
+                            5. Previous files auto-archived<br><br>
+                            Old versions always accessible in Version History
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">✅ QA Compliance</div>
+                        <div class="ref-card-content">
+                            <strong>Automatic QA tracking:</strong><br>
+                            • Who reviewed (login name)<br>
+                            • When reviewed (timestamp)<br>
+                            • What was checked (QA fields)<br>
+                            • Comments/markups (in PDF)<br><br>
+                            <strong>Export for audits:</strong><br>
+                            Library → Export to Excel → Full QA report with all metadata
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">🚫 Common Mistakes</div>
+                        <div class="ref-card-content">
+                            <strong>DON'T:</strong><br>
+                            ❌ Upload only DWG (need PDF too)<br>
+                            ❌ Edit files without check-out<br>
+                            ❌ Use spaces in filenames<br>
+                            ❌ Forget to add metadata<br><br>
+                            <strong>DO:</strong><br>
+                            ✅ Always upload both files<br>
+                            ✅ Use standard naming convention
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">🛠️ Troubleshooting</div>
+                        <div class="ref-card-content">
+                            <strong>PDF won't display:</strong><br>
+                            Download and open locally<br><br>
+                            <strong>Can't upload:</strong><br>
+                            Check file size and permissions<br><br>
+                            <strong>XREFs broken:</strong><br>
+                            Use eTransmit or bind XREFs before uploading<br><br>
+                            <strong>Need help?</strong> IT Support x1234
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Benefits -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">🎯</span>
+                    Why This Process Works for CAD
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">📍</div>
+                        <strong>Never Lose a Drawing</strong><br>
+                        <span style="font-size: 13px;">All revisions tracked and backed up automatically</span>
+                    </div>
+                    
+                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">⏱️</div>
+                        <strong>Review From Anywhere</strong><br>
+                        <span style="font-size: 13px;">No CAD software needed for reviewers - just a browser</span>
+                    </div>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">📊</div>
+                        <strong>Complete Audit Trail</strong><br>
+                        <span style="font-size: 13px;">Every review, comment, and approval logged automatically</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</body>
+</html>

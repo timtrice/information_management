@@ -1,0 +1,11 @@
+/* Chat bubble callouts: [!user] and [!agent] */
+
+.callout[data-callout="user"] {
+  --callout-color: 138, 180, 248;
+  --callout-icon: circle-question-mark;
+}
+
+.callout[data-callout="agent"] {
+  --callout-color: 200, 200, 200;
+  --callout-icon: bot;
+}

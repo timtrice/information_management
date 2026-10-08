@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanson QA RACI Responsibility Matrix</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .container { max-width: 100%; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: white;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a4d2e 0%, #2d5f3f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header .subtitle {
+            margin-top: 5px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .main-content {
+            background: #f8f9fa;
+            padding: 25px;
+        }
+        
+        .legend-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .legend-title {
+            color: #1a4d2e;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .raci-symbol {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            color: white;
+        }
+        
+        .raci-r { background: #d32f2f; }
+        .raci-a { background: #f57c00; }
+        .raci-c { background: #1976d2; }
+        .raci-i { background: #616161; }
+        
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        
+        .role-item {
+            text-align: center;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .role-abbr {
+            font-weight: bold;
+            color: #1a4d2e;
+            font-size: 14px;
+        }
+        
+        .role-full {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        .raci-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            margin: -20px -20px 20px -20px;
+            padding: 15px 20px;
+            border-radius: 10px 10px 0 0;
+            border-bottom: 3px solid #1a4d2e;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a4d2e;
+            margin: 0;
+        }
+        
+        .section-procedure {
+            font-size: 13px;
+            color: #666;
+            margin-top: 3px;
+        }
+        
+        .raci-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .raci-table th {
+            background: #f5f5f5;
+            padding: 8px 4px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            color: #1a4d2e;
+        }
+        
+        .raci-table th.task-header {
+            text-align: left;
+            padding-left: 10px;
+            min-width: 200px;
+        }
+        
+        .raci-table td {
+            padding: 8px 4px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            background: white;
+        }
+        
+        .raci-table td.task-cell {
+            text-align: left;
+            padding-left: 10px;
+            background: #fafafa;
+            font-weight: 500;
+        }
+        
+        .raci-table tr:hover td {
+            background: #f9f9f9;
+        }
+        
+        .raci-table tr:hover td.task-cell {
+            background: #f0f0f0;
+        }
+        
+        .raci-cell {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-block;
+            min-width: 20px;
+        }
+        
+        .raci-cell-r { background: #ffcdd2; color: #d32f2f; }
+        .raci-cell-a { background: #ffe0b2; color: #f57c00; }
+        .raci-cell-c { background: #bbdefb; color: #1976d2; }
+        .raci-cell-i { background: #e0e0e0; color: #616161; }
+        .raci-cell-ar { background: linear-gradient(135deg, #ffe0b2 50%, #ffcdd2 50%); color: #d32f2f; }
+        
+        .summary-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #1a4d2e;
+        }
+        
+        .summary-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #1a4d2e;
+        }
+        
+        .summary-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .insight-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .insight-box strong {
+            color: #2e7d32;
+        }
+        
+        @media (max-width: 768px) {
+            .raci-table {
+                font-size: 11px;
+            }
+            .raci-table th, .raci-table td {
+                padding: 4px 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👥 Hanson QA RACI Responsibility Matrix</h1>
+            <div class="subtitle">Clear accountability across all quality control processes</div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Legend -->
+            <div class="legend-section">
+                <div class="legend-title">📋 RACI Legend</div>
+                <div class="legend-grid">
+                    <div class="legend-item">
+                        <div class="raci-symbol raci-r">R</div>
+                        <div>
+                            <strong>Responsible</strong><br>
+                            <span style="font-size: 12px; color: #666;">Does the work</span>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="raci-symbol raci-a">A</div>
+                        <div>
+                            <strong>Accountable</strong><br>
+                            <span style="font-size: 12px; color: #666;">Ultimate decision/approval</span>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="raci-symbol raci-c">C</div>
+                        <div>
+                            <strong>Consulted</strong><br>
+                            <span style="font-size: 12px; color: #666;">Provides input</span>
+                        </div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="raci-symbol raci-i">I</div>
+                        <div>
+                            <strong>Informed</strong><br>
+                            <span style="font-size: 12px; color: #666;">Kept updated</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="role-grid">
+                    <div class="role-item">
+                        <div class="role-abbr">PM</div>
+                        <div class="role-full">Project Manager</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">PP</div>
+                        <div class="role-full">Project Principal</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">POR</div>
+                        <div class="role-full">Professional of Record</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">OR</div>
+                        <div class="role-full">Originator</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">RV</div>
+                        <div class="role-full">Reviewer</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">RC</div>
+                        <div class="role-full">Review Coordinator</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">ED</div>
+                        <div class="role-full">Editor</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">QA-S</div>
+                        <div class="role-full">QA Specialist</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">CQAO</div>
+                        <div class="role-full">Corporate QA Officer</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">IT</div>
+                        <div class="role-full">Information Technology</div>
+                    </div>
+                    <div class="role-item">
+                        <div class="role-abbr">RCust</div>
+                        <div class="role-full">Records Custodian</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUAL3110 RACI -->
+            <div class="raci-section">
+                <div class="section-header">
+                    <h2 class="section-title">Control of Client/Contract/Project-Specific QA Documents</h2>
+                    <div class="section-procedure">QUAL3110</div>
+                </div>
+                
+                <table class="raci-table">
+                    <thead>
+                        <tr>
+                            <th class="task-header">Task</th>
+                            <th>PM</th>
+                            <th>PP</th>
+                            <th>POR</th>
+                            <th>OR</th>
+                            <th>RV</th>
+                            <th>RC</th>
+                            <th>ED</th>
+                            <th>QA-S</th>
+                            <th>CQAO</th>
+                            <th>IT</th>
+                            <th>RCust</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="task-cell">Determine need for document/revision</td>
+                            <td><span class="raci-cell raci-cell-a">A</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Select originator/reviewers</td>
+                            <td><span class="raci-cell raci-cell-a">A</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Develop draft document</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Conduct review</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Track review status</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Resolve/disposition comments</td>
+                            <td><span class="raci-cell raci-cell-a">A</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Post final controlled document</td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Update QA document register</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- QUAL3092 RACI -->
+            <div class="raci-section">
+                <div class="section-header">
+                    <h2 class="section-title">Preparation & Review of Technical Documents</h2>
+                    <div class="section-procedure">QUAL3092</div>
+                </div>
+                
+                <table class="raci-table">
+                    <thead>
+                        <tr>
+                            <th class="task-header">Task</th>
+                            <th>PM</th>
+                            <th>PP</th>
+                            <th>POR</th>
+                            <th>OR</th>
+                            <th>RV</th>
+                            <th>RC</th>
+                            <th>ED</th>
+                            <th>QA-S</th>
+                            <th>CQAO</th>
+                            <th>IT</th>
+                            <th>RCust</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="task-cell">Assign originator/reviewers</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-a">A</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Prepare draft document</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Initiate review form</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-c">C</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Perform technical review</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Facilitate resolution</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-a">A*</span></td>
+                            <td><span class="raci-cell raci-cell-a">A</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Perform editorial review</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Perform management review</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Authenticate document</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                        </tr>
+                        <tr>
+                            <td class="task-cell">Archive final document</td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-i">I</span></td>
+                            <td><span class="raci-cell raci-cell-r">R</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="font-size: 12px; color: #666; margin-top: 10px;">
+                    * PP is Accountable only if POR is involved in the dispute
+                </div>
+            </div>
+            
+            <!-- Other procedures condensed -->
+            <div class="raci-section">
+                <div class="section-header">
+                    <h2 class="section-title">Additional QA Procedures - Key Responsibilities</h2>
+                    <div class="section-procedure">QUAL3091, QUAL3130, QUAL4000</div>
+                </div>
+                
+                <div style="padding: 15px;">
+                    <h3 style="color: #1a4d2e; font-size: 16px; margin-bottom: 10px;">📐 Review of Technical Drawings (QUAL3091)</h3>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>PM/POR</strong>: Accountable & Responsible for reviewing drawing sets/series</li>
+                        <li><strong>PM/POR</strong>: Responsible for completing drawing review form</li>
+                        <li><strong>PM/POR</strong>: Responsible for tracking revisions</li>
+                    </ul>
+                    
+                    <h3 style="color: #1a4d2e; font-size: 16px; margin-bottom: 10px; margin-top: 20px;">📁 Control of Project Records (QUAL3130)</h3>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>PM</strong>: Accountable for ensuring record compliance</li>
+                        <li><strong>PM</strong>: Accountable for assigning record storage responsibilities</li>
+                        <li><strong>IT</strong>: Responsible for maintaining servers/backups</li>
+                        <li><strong>Originator/Reviewer</strong>: Responsible for applying naming conventions</li>
+                        <li><strong>PM</strong>: Responsible for duplicating client-hosted DMS records internally</li>
+                    </ul>
+                    
+                    <h3 style="color: #1a4d2e; font-size: 16px; margin-bottom: 10px; margin-top: 20px;">✅ Corporate QA Program Roles (QUAL4000)</h3>
+                    <ul style="margin: 10px 0; padding-left: 20px;">
+                        <li><strong>PM</strong>: Accountable & Responsible for implementing CQAP</li>
+                        <li><strong>CQAO</strong>: Responsible for conducting audits/surveillance</li>
+                        <li><strong>CQAO</strong>: Accountable & Responsible for assigning QA training</li>
+                        <li><strong>PM/CQAO</strong>: Accountable for halting services for QA issues</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Summary Analysis -->
+            <div class="summary-section">
+                <h2 style="color: #1a4d2e; font-size: 20px; margin-bottom: 20px;">📊 RACI Analysis Summary</h2>
+                
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-number">PM</div>
+                        <div class="summary-label">Most Accountable Role</div>
+                        <div style="font-size: 12px; margin-top: 5px;">Primary accountability for QA compliance</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-number">POR</div>
+                        <div class="summary-label">Technical Authority</div>
+                        <div style="font-size: 12px; margin-top: 5px;">Accountable for technical content</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-number">11</div>
+                        <div class="summary-label">Total Roles</div>
+                        <div style="font-size: 12px; margin-top: 5px;">Involved in QA processes</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <div class="summary-number">PP</div>
+                        <div class="summary-label">Escalation Point</div>
+                        <div style="font-size: 12px; margin-top: 5px;">Resolves conflicts when POR involved</div>
+                    </div>
+                </div>
+                
+                <div class="insight-box">
+                    <strong>🔍 Key Insight:</strong>
+                    The PM carries the highest accountability burden across all QA processes, being accountable for document decisions, 
+                    comment resolution, record compliance, and CQAP implementation. The POR holds technical accountability, while the 
+                    PP serves as the escalation point when conflicts involve the POR. This creates clear escalation paths but also 
+                    concentrates decision-making responsibility heavily on the PM role.
+                </div>
+                
+                <div class="insight-box" style="background: #fff3e0; border-color: #ff9800;">
+                    <strong style="color: #e65100;">⚠️ Process Observation:</strong>
+                    Multiple people are "Responsible" for the same tasks (e.g., OR and RV both responsible for resolution facilitation), 
+                    which can create confusion about who actually does the work. Digital tools could clarify this by automatically 
+                    routing tasks to the correct person based on workflow stage.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

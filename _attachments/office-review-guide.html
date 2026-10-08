@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Review Guide - Microsoft Office Native Process</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .container { max-width: 100%; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: white;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header .subtitle {
+            margin-top: 5px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .office-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: #0078d4;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            background: #f8f9fa;
+            padding: 25px;
+        }
+        
+        .app-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .app-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .app-tab.word {
+            border-color: #2b579a;
+            background: #e3f2fd;
+        }
+        
+        .app-tab.excel {
+            border-color: #217346;
+            background: #e8f5e9;
+        }
+        
+        .app-tab.teams {
+            border-color: #6264a7;
+            background: #f3f2f9;
+        }
+        
+        .app-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .app-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .workflow-diagram {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .workflow-title {
+            color: #0078d4;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 150px;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .workflow-step:hover {
+            border-color: #0078d4;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 120, 212, 0.2);
+        }
+        
+        .workflow-step.highlight {
+            background: #e3f2fd;
+            border-color: #0078d4;
+        }
+        
+        .step-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .step-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .step-detail {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            transform: translateY(-50%);
+            color: #0078d4;
+            font-size: 18px;
+            z-index: 1;
+        }
+        
+        .process-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            color: #0078d4;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+            background: #e3f2fd;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .column-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #0078d4;
+        }
+        
+        .column-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #0078d4;
+            transition: transform 0.2s;
+        }
+        
+        .feature-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            color: #0078d4;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .feature-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box strong {
+            color: #e65100;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tip-box {
+            background: #e3f2fd;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box strong {
+            color: #0078d4;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .checklist li {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f5f5f5;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .checklist li:before {
+            content: '✓';
+            color: #4caf50;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .comparison-table th {
+            background: #0078d4;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .check { color: #4caf50; font-weight: bold; }
+        .partial { color: #ff9800; font-weight: bold; }
+        .cross { color: #f44336; font-weight: bold; }
+        
+        .quick-reference {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .ref-card {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-top: 3px solid #0078d4;
+        }
+        
+        .ref-card-title {
+            font-weight: 600;
+            color: #0078d4;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .ref-card-content {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .ref-card-content code {
+            background: #e0e0e0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-column, .feature-grid, .quick-reference {
+                grid-template-columns: 1fr;
+            }
+            .workflow-steps {
+                flex-direction: column;
+            }
+            .arrow {
+                display: none;
+            }
+            .app-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="office-badge">MICROSOFT 365</div>
+            <h1>📊 Native Document Review in Office</h1>
+            <div class="subtitle">Track Changes, Comments, and Co-authoring Without PDFs</div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Application Options -->
+            <div class="app-tabs">
+                <div class="app-tab word">
+                    <div class="app-icon">📝</div>
+                    <div class="app-name">Word</div>
+                    <div style="font-size: 11px; color: #666;">Reports, Specs, Procedures</div>
+                </div>
+                <div class="app-tab excel">
+                    <div class="app-icon">📊</div>
+                    <div class="app-name">Excel</div>
+                    <div style="font-size: 11px; color: #666;">Calculations, Estimates, Data</div>
+                </div>
+                <div class="app-tab teams">
+                    <div class="app-icon">💬</div>
+                    <div class="app-name">Teams/SharePoint</div>
+                    <div style="font-size: 11px; color: #666;">Real-time Collaboration</div>
+                </div>
+            </div>
+            
+            <!-- Workflow -->
+            <div class="workflow-diagram">
+                <div class="workflow-title">🔄 MODERN OFFICE REVIEW WORKFLOW</div>
+                
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="step-icon">📄</div>
+                        <div class="step-label">1. CREATE</div>
+                        <div class="step-detail">Native Office file</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step highlight">
+                        <div class="step-icon">☁️</div>
+                        <div class="step-label">2. UPLOAD</div>
+                        <div class="step-detail">SharePoint/OneDrive</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-icon">👥</div>
+                        <div class="step-label">3. SHARE</div>
+                        <div class="step-detail">Send review link</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step highlight">
+                        <div class="step-icon">✏️</div>
+                        <div class="step-label">4. CO-AUTHOR</div>
+                        <div class="step-detail">Real-time editing</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-icon">💬</div>
+                        <div class="step-label">5. REVIEW</div>
+                        <div class="step-detail">Comments & track changes</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="step-icon">✅</div>
+                        <div class="step-label">6. FINALIZE</div>
+                        <div class="step-detail">Accept/reject changes</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word Review Process -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">📝</span>
+                    WORD: Track Changes for Reports & Specifications
+                </div>
+                
+                <div class="two-column">
+                    <div class="column-section">
+                        <div class="column-title">
+                            <span>🎨</span> DOCUMENT ORIGINATOR
+                        </div>
+                        
+                        <ol style="margin: 10px 0; padding-left: 20px; font-size: 14px;">
+                            <li><strong>Prepare document</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Review tab → Track Changes ON</li>
+                                    <li>Set user name (File → Options)</li>
+                                    <li>Lock tracking if needed (with password)</li>
+                                </ul>
+                            </li>
+                            <li><strong>Save to SharePoint</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>File → Save As → SharePoint location</li>
+                                    <li>Or upload to Teams channel</li>
+                                </ul>
+                            </li>
+                            <li><strong>Share for review</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Click Share button</li>
+                                    <li>Set permissions (edit/comment/view)</li>
+                                    <li>Add message for reviewers</li>
+                                </ul>
+                            </li>
+                            <li><strong>Monitor changes</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>See who's currently editing (presence)</li>
+                                    <li>View changes in real-time</li>
+                                    <li>Respond to comments</li>
+                                </ul>
+                            </li>
+                            <li><strong>Finalize document</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Review → Accept/Reject changes</li>
+                                    <li>Delete resolved comments</li>
+                                    <li>Compare versions if needed</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        
+                        <div class="tip-box">
+                            <strong>💡 PRO TIP:</strong>
+                            Use "Simple Markup" view during review to see clean document with change indicators in margin. Switch to "All Markup" to see details.
+                        </div>
+                    </div>
+                    
+                    <div class="column-section">
+                        <div class="column-title">
+                            <span>✍️</span> REVIEWERS
+                        </div>
+                        
+                        <ol style="margin: 10px 0; padding-left: 20px; font-size: 14px;">
+                            <li><strong>Open shared link</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Opens in Word desktop or browser</li>
+                                    <li>Your name appears on edits</li>
+                                </ul>
+                            </li>
+                            <li><strong>Review tools available:</strong>
+                                <ul class="checklist" style="margin-left: -10px;">
+                                    <li>Track Changes for edits</li>
+                                    <li>Comments for questions/suggestions</li>
+                                    <li>@mentions to notify specific people</li>
+                                    <li>Reply to existing comments</li>
+                                    <li>Suggest formatting changes</li>
+                                </ul>
+                            </li>
+                            <li><strong>See others working</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>Colored flags show who's where</li>
+                                    <li>Changes appear as they type</li>
+                                    <li>No save conflicts</li>
+                                </ul>
+                            </li>
+                            <li><strong>Review complete</strong>
+                                <ul style="margin: 5px 0;">
+                                    <li>All changes auto-saved</li>
+                                    <li>Can leave final comment</li>
+                                    <li>Close and changes persist</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ IMPORTANT:</strong>
+                            Track Changes must be ON before editing. Check the Review tab - if it's OFF, your changes won't be tracked for QA!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Excel Review Process -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">📊</span>
+                    EXCEL: Comments & Change Tracking for Calculations
+                </div>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>💬</span> Comments & Notes
+                        </div>
+                        <div class="feature-desc">
+                            Two systems: Comments (threaded conversations with replies) and Notes (simple annotations). Comments are perfect for review discussions. Right-click any cell → New Comment.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>🔒</span> Protection with Exceptions
+                        </div>
+                        <div class="feature-desc">
+                            Protect sheets but allow specific ranges for input. Review tab → Protect Sheet → Select what reviewers can change. Perfect for calculation templates.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>📝</span> Track Changes (Legacy)
+                        </div>
+                        <div class="feature-desc">
+                            Review tab → Track Changes → Highlight Changes. Shows who changed what cell and when. Note: Being phased out in favor of version history.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>🔄</span> Version History
+                        </div>
+                        <div class="feature-desc">
+                            File → Info → Version History. See all previous versions, who made changes, and restore if needed. More reliable than Track Changes.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>👁️</span> Show Changes
+                        </div>
+                        <div class="feature-desc">
+                            New feature in 365: See changes highlighted in real-time as others edit. Green = additions, Red = deletions. Temporary visual during co-authoring.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>✅</span> Data Validation Comments
+                        </div>
+                        <div class="feature-desc">
+                            Add input messages and error alerts to cells. Data tab → Data Validation → Input Message. Guides reviewers on acceptable values.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 EXCEL BEST PRACTICE:</strong>
+                    Create a "Review Log" worksheet in your file. Include columns for: Reviewer, Date, Cell Reference, Issue, Response, Status. This becomes your QA documentation.
+                </div>
+            </div>
+            
+            <!-- Comparison Table -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">⚖️</span>
+                    Office Native vs. PDF-Based Review
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Office Native Review</th>
+                            <th>PDF Review (Adobe/Bluebeam)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>File Format</strong></td>
+                            <td>Stay in Word/Excel - no conversion</td>
+                            <td>Must export to PDF first</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Real-time Collaboration</strong></td>
+                            <td><span class="check">✓</span> Multiple users simultaneously</td>
+                            <td><span class="partial">~</span> Sequential or managed sessions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Change Tracking</strong></td>
+                            <td><span class="check">✓</span> Automatic with user names</td>
+                            <td><span class="cross">✗</span> Comments only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Version Control</strong></td>
+                            <td><span class="check">✓</span> Automatic in SharePoint</td>
+                            <td><span class="partial">~</span> Manual versioning</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formula Checking</strong></td>
+                            <td><span class="check">✓</span> Can audit Excel formulas</td>
+                            <td><span class="cross">✗</span> Formulas not visible</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CAD Drawings</strong></td>
+                            <td><span class="cross">✗</span> Not suitable</td>
+                            <td><span class="check">✓</span> Designed for drawings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Final Deliverable</strong></td>
+                            <td>Export to PDF after review</td>
+                            <td>Already in PDF format</td>
+                        </tr>
+                        <tr>
+                            <td><strong>QA Documentation</strong></td>
+                            <td><span class="check">✓</span> Changes tracked automatically</td>
+                            <td><span class="partial">~</span> Export comment summary</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- QA Compliance -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">✅</span>
+                    Meeting QUAL3130 Requirements with Office
+                </div>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>📝</span> Automatic Audit Trail
+                        </div>
+                        <div class="feature-desc">
+                            Every change shows: who, what, when. Reviewing Pane in Word shows complete history. Excel comments are timestamped. Meets traceability requirements.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>🔒</span> Authentication
+                        </div>
+                        <div class="feature-desc">
+                            Users authenticated through Microsoft 365 accounts. Changes tied to corporate identity. Can add digital signatures through Insert → Signature Line.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>📁</span> Folder Compliance
+                        </div>
+                        <div class="feature-desc">
+                            Files stay in your Admin folders during review. No need to move for review process. Final PDF goes to 17-Deliverables after changes accepted.
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <span>📊</span> Review Summary
+                        </div>
+                        <div class="feature-desc">
+                            Word: Print markup summary or save as PDF with comments. Excel: Export comments or create review log. This replaces separate QA forms.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Reference -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">⚡</span>
+                    Quick Reference Guide
+                </div>
+                
+                <div class="quick-reference">
+                    <div class="ref-card">
+                        <div class="ref-card-title">🚀 Starting Co-authoring</div>
+                        <div class="ref-card-content">
+                            <strong>Word/Excel:</strong><br>
+                            1. Save to SharePoint/OneDrive<br>
+                            2. Click Share button (top right)<br>
+                            3. Enter email addresses<br>
+                            4. Choose "Can edit"<br>
+                            5. Add your message<br>
+                            6. Send<br><br>
+                            Everyone can now edit simultaneously!
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">⌨️ Essential Shortcuts</div>
+                        <div class="ref-card-content">
+                            <strong>Word:</strong><br>
+                            <code>Ctrl+Shift+E</code> - Track Changes<br>
+                            <code>Ctrl+Alt+M</code> - New Comment<br>
+                            <code>F5</code> - Go to specific change<br><br>
+                            <strong>Excel:</strong><br>
+                            <code>Shift+F2</code> - Add Comment<br>
+                            <code>Ctrl+Shift+L</code> - Filter<br>
+                            <code>Alt+R+G</code> - Protect Sheet
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">👥 @Mentions</div>
+                        <div class="ref-card-content">
+                            Type @ in a comment followed by someone's name. They get an email notification with a link directly to that comment. Great for getting specific input.<br><br>
+                            Works in: Word, Excel, PowerPoint
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">📊 Version Comparison</div>
+                        <div class="ref-card-content">
+                            <strong>Word:</strong><br>
+                            Review → Compare → Two versions<br><br>
+                            <strong>Excel:</strong><br>
+                            File → Info → Version History<br>
+                            Click any version to open<br><br>
+                            <strong>SharePoint:</strong><br>
+                            Right-click file → Version History
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">🔒 Locking Tracking</div>
+                        <div class="ref-card-content">
+                            <strong>Force Track Changes:</strong><br>
+                            Word: Review → Track Changes → Lock Tracking (set password)<br><br>
+                            Now NO ONE can turn off tracking without the password. Ensures QA compliance.
+                        </div>
+                    </div>
+                    
+                    <div class="ref-card">
+                        <div class="ref-card-title">✅ Creating Final Version</div>
+                        <div class="ref-card-content">
+                            <strong>Word:</strong><br>
+                            1. Accept all changes<br>
+                            2. Delete all comments<br>
+                            3. File → Info → Check for Issues<br>
+                            4. Save as PDF for deliverable<br><br>
+                            <strong>Keep the marked-up version for QA records!</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Benefits Summary -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">🎯</span>
+                    Why Office Native Review Works for Our Team
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">🚀</div>
+                        <strong>No Training Needed</strong><br>
+                        <span style="font-size: 13px;">Everyone knows Word & Excel already</span>
+                    </div>
+                    
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">♻️</div>
+                        <strong>Stay in Native Format</strong><br>
+                        <span style="font-size: 13px;">No PDF conversion until final</span>
+                    </div>
+                    
+                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">👥</div>
+                        <strong>True Collaboration</strong><br>
+                        <span style="font-size: 13px;">Multiple people editing simultaneously</span>
+                    </div>
+                    
+                    <div style="background: #fce4ec; padding: 15px; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 28px; margin-bottom: 5px;">📝</div>
+                        <strong>Automatic QA Trail</strong><br>
+                        <span style="font-size: 13px;">Every change tracked without forms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanson QA Document Review Process Guide</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .container { max-width: 100%; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: white;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a4d2e 0%, #2d5f3f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .header .subtitle {
+            margin-top: 5px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .qual-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            background: #f8f9fa;
+            padding: 25px;
+        }
+        
+        .overview-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            color: #1a4d2e;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+            background: #e8f5e9;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .document-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .doc-type-card {
+            background: #f8f9fa;
+            border-left: 4px solid #1a4d2e;
+            padding: 15px;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .doc-type-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(26,77,46,0.15);
+        }
+        
+        .doc-type-title {
+            font-weight: 600;
+            color: #1a4d2e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .doc-type-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .process-flow {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .flow-title {
+            color: #1a4d2e;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .flow-step {
+            flex: 1;
+            min-width: 140px;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .flow-step:hover {
+            border-color: #1a4d2e;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(26,77,46,0.2);
+        }
+        
+        .flow-step.highlight {
+            background: #e8f5e9;
+            border-color: #1a4d2e;
+        }
+        
+        .step-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .step-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .step-detail {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: -20px;
+            transform: translateY(-50%);
+            color: #1a4d2e;
+            font-size: 18px;
+            z-index: 1;
+        }
+        
+        .forms-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .forms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .form-card {
+            background: #fafafa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-card:hover {
+            border-color: #1a4d2e;
+            box-shadow: 0 4px 12px rgba(26,77,46,0.1);
+        }
+        
+        .form-number {
+            font-weight: bold;
+            color: #1a4d2e;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .form-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .form-usage {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .form-fields {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .field-list {
+            font-size: 12px;
+            color: #555;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .field-list li {
+            padding: 2px 0;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .field-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #1a4d2e;
+        }
+        
+        .detailed-steps {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .step-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #1a4d2e;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #1a4d2e;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .step-content {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .step-content ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .tip-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box strong {
+            color: #2e7d32;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .warning-box strong {
+            color: #e65100;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .comparison-table th {
+            background: #1a4d2e;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .flow-steps {
+                flex-direction: column;
+            }
+            .arrow {
+                display: none;
+            }
+            .forms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="qual-badge">QUAL3090-3094</div>
+            <h1>📋 Hanson QA Document Review Process</h1>
+            <div class="subtitle">Complete Guide to Technical Document Review & Approval</div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Overview Section -->
+            <div class="overview-section">
+                <div class="section-title">
+                    <span class="icon">🎯</span>
+                    QA Review Process Overview
+                </div>
+                <p style="color: #666; line-height: 1.6;">
+                    Hanson's QA review process ensures all technical documents, calculations, drawings, and construction submittals 
+                    meet quality standards. This process creates an audit trail showing independent verification of work products 
+                    before client delivery.
+                </p>
+                
+                <div class="warning-box">
+                    <strong>⚠️ KEY PRINCIPLE:</strong>
+                    All technical work must be reviewed by someone OTHER than the originator. The Professional of Record (POR) 
+                    manages the review process but may not serve as both originator AND reviewer for the same document.
+                </div>
+            </div>
+            
+            <!-- Document Types -->
+            <div class="overview-section">
+                <div class="section-title">
+                    <span class="icon">📁</span>
+                    Types of Documents Requiring QA Review
+                </div>
+                
+                <div class="document-types">
+                    <div class="doc-type-card">
+                        <div class="doc-type-title">
+                            <span>📊</span> Technical Calculations
+                        </div>
+                        <div class="doc-type-desc">
+                            <strong>QUAL3090</strong><br>
+                            Analysis, design calculations, quantities, cost estimates<br>
+                            <em>Form: QUAL3090.01/QUAL3092.01</em>
+                        </div>
+                    </div>
+                    
+                    <div class="doc-type-card">
+                        <div class="doc-type-title">
+                            <span>📐</span> Technical Drawings
+                        </div>
+                        <div class="doc-type-desc">
+                            <strong>QUAL3091</strong><br>
+                            Construction plans, layout drawings, plats of survey<br>
+                            <em>Form: QUAL3091.01 + Review/Revision blocks on drawings</em>
+                        </div>
+                    </div>
+                    
+                    <div class="doc-type-card">
+                        <div class="doc-type-title">
+                            <span>📝</span> Technical Documents
+                        </div>
+                        <div class="doc-type-desc">
+                            <strong>QUAL3092</strong><br>
+                            Reports, specifications, procedures, planning documents<br>
+                            <em>Form: QUAL3090.01/QUAL3092.01</em>
+                        </div>
+                    </div>
+                    
+                    <div class="doc-type-card">
+                        <div class="doc-type-title">
+                            <span>🏗️</span> Construction Submittals
+                        </div>
+                        <div class="doc-type-desc">
+                            <strong>QUAL3093</strong><br>
+                            Shop drawings, product data, samples<br>
+                            <em>Forms: QUAL3093.01, QUAL3093.02, QUAL3093.03</em>
+                        </div>
+                    </div>
+                    
+                    <div class="doc-type-card">
+                        <div class="doc-type-title">
+                            <span>🔧</span> Delegated Design
+                        </div>
+                        <div class="doc-type-desc">
+                            <strong>QUAL3094</strong><br>
+                            Contractor-provided designs/certifications<br>
+                            <em>Forms: QUAL3094.01, QUAL3094.02, QUAL3094.03</em>
+                        </div>
+                    </div>
+                    
+                    <div class="doc-type-card">
+                        <div class="doc-type-title">
+                            <span>📋</span> QA Documents
+                        </div>
+                        <div class="doc-type-desc">
+                            <strong>QUAL3110</strong><br>
+                            Project-specific QA plans and procedures<br>
+                            <em>Form: QUAL3110.01</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Universal Process Flow -->
+            <div class="process-flow">
+                <div class="flow-title">🔄 UNIVERSAL QA REVIEW WORKFLOW</div>
+                
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="step-icon">✏️</div>
+                        <div class="step-label">1. ORIGINATE</div>
+                        <div class="step-detail">Create document<br>Initiate form</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step highlight">
+                        <div class="step-icon">👤</div>
+                        <div class="step-label">2. ASSIGN</div>
+                        <div class="step-detail">POR assigns reviewer<br>Define scope</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">🔍</div>
+                        <div class="step-label">3. REVIEW</div>
+                        <div class="step-detail">Independent check<br>Document comments</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">🔧</div>
+                        <div class="step-label">4. RESOLVE</div>
+                        <div class="step-detail">Address comments<br>Update document</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step highlight">
+                        <div class="step-icon">✅</div>
+                        <div class="step-label">5. APPROVE</div>
+                        <div class="step-detail">POR approval<br>Sign form</div>
+                        <div class="arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="step-icon">📁</div>
+                        <div class="step-label">6. FILE</div>
+                        <div class="step-detail">Store per QUAL3130<br>Project records</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Forms Documentation -->
+            <div class="forms-section">
+                <div class="section-title">
+                    <span class="icon">📄</span>
+                    Required QA Forms & Documentation
+                </div>
+                
+                <div class="forms-grid">
+                    <div class="form-card">
+                        <div class="form-number">QUAL3090.01/QUAL3092.01</div>
+                        <div class="form-name">Review of Technical Calculations/Documents</div>
+                        <div class="form-usage">
+                            Used for both calculations (QUAL3090) and documents (QUAL3092). 
+                            Dual-purpose form with same fields.
+                        </div>
+                        <div class="form-fields">
+                            <strong>Key Fields:</strong>
+                            <ul class="field-list">
+                                <li>General info (project, document title)</li>
+                                <li>Type of calculation/document</li>
+                                <li>Scope of review checkboxes</li>
+                                <li>Originator signature & date</li>
+                                <li>Reviewer comments & signature</li>
+                                <li>POR approval signature</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <div class="form-number">QUAL3091.01</div>
+                        <div class="form-name">Manager Review of Drawings</div>
+                        <div class="form-usage">
+                            Used for complete drawing sets. Individual drawings use review/revision blocks on the drawing itself.
+                        </div>
+                        <div class="form-fields">
+                            <strong>Key Fields:</strong>
+                            <ul class="field-list">
+                                <li>Drawing set identification</li>
+                                <li>Contract compliance check</li>
+                                <li>Coordination verification</li>
+                                <li>PM/POR signature</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <div class="form-number">QUAL3093.01</div>
+                        <div class="form-name">Log of Submittals</div>
+                        <div class="form-usage">
+                            Tracks all construction submittals. Categorizes as "actionable" (requiring review) or "informational" (acknowledgment only).
+                        </div>
+                        <div class="form-fields">
+                            <strong>Key Fields:</strong>
+                            <ul class="field-list">
+                                <li>Submittal number & description</li>
+                                <li>Receipt date</li>
+                                <li>Category (actionable/informational)</li>
+                                <li>Review status</li>
+                                <li>Return date</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <div class="form-number">QUAL3093.02</div>
+                        <div class="form-name">Traditional Review of Submittals</div>
+                        <div class="form-usage">
+                            Documents review when stamp cannot be applied directly to submittal (e.g., physical samples).
+                        </div>
+                        <div class="form-fields">
+                            <strong>Review Actions:</strong>
+                            <ul class="field-list">
+                                <li>No Exceptions Taken</li>
+                                <li>Furnish as Corrected</li>
+                                <li>Revise and Resubmit</li>
+                                <li>Submit Specified Item</li>
+                                <li>Rejected - See Remarks</li>
+                                <li>For Information Only</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <div class="form-number">QUAL3094.02</div>
+                        <div class="form-name">Traditional Review of Delegated Design</div>
+                        <div class="form-usage">
+                            For contractor-provided designs when Hanson prepared original contract documents.
+                        </div>
+                        <div class="form-fields">
+                            <strong>Review Actions:</strong>
+                            <ul class="field-list">
+                                <li>No Comments</li>
+                                <li>See Comments (info only)</li>
+                                <li>Resubmit (Non-compliance)</li>
+                                <li>Resubmit (Incomplete)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="form-card">
+                        <div class="form-number">QUAL3110.01</div>
+                        <div class="form-name">Review, Approval and Posting Record</div>
+                        <div class="form-usage">
+                            For client/project-specific QA documents. Tracks review from draft through final posting.
+                        </div>
+                        <div class="form-fields">
+                            <strong>Sections:</strong>
+                            <ul class="field-list">
+                                <li>Section I-II: Document ID & reviewers</li>
+                                <li>Section III-IV: Review completion</li>
+                                <li>Section V: Officer approval</li>
+                                <li>Section VI: Posting verification</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Detailed Process Steps -->
+            <div class="detailed-steps">
+                <div class="section-title">
+                    <span class="icon">📝</span>
+                    Detailed Process by Document Type
+                </div>
+                
+                <div class="step-section">
+                    <div class="step-title">📊 Technical Calculations (QUAL3090)</div>
+                    <div class="step-content">
+                        <strong>1. Originator prepares calculation package:</strong>
+                        <ul>
+                            <li>Statement of purpose</li>
+                            <li>Assumptions</li>
+                            <li>References for formulas/methods</li>
+                            <li>Results with supporting documentation</li>
+                            <li>Completes header on QUAL3090.01 form</li>
+                        </ul>
+                        
+                        <strong>2. POR assigns reviewer and scope:</strong>
+                        <ul>
+                            <li>Math check for hand calculations</li>
+                            <li>Spot checks for spreadsheets</li>
+                            <li>Input/output review for software</li>
+                        </ul>
+                        
+                        <strong>3. Reviewer performs review:</strong>
+                        <ul>
+                            <li>Marks corrections in RED</li>
+                            <li>Highlights reviewed items in YELLOW</li>
+                            <li>Defers items in GREEN for POR review</li>
+                            <li>Signs/dates form QUAL3090.01</li>
+                        </ul>
+                        
+                        <strong>4. Resolution and approval:</strong>
+                        <ul>
+                            <li>Originator addresses comments</li>
+                            <li>If disagreement, POR resolves</li>
+                            <li>POR signs final approval</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step-section">
+                    <div class="step-title">📐 Technical Drawings (QUAL3091)</div>
+                    <div class="step-content">
+                        <strong>Individual Drawing Process:</strong>
+                        <ul>
+                            <li>Originator signs "Drawn" block on drawing</li>
+                            <li>Designer signs "Designed" block</li>
+                            <li>Reviewer checks and signs "Reviewed" block</li>
+                            <li>All signatures/dates in review block on drawing itself</li>
+                        </ul>
+                        
+                        <strong>Complete Drawing Set:</strong>
+                        <ul>
+                            <li>PM/POR reviews entire set for coordination</li>
+                            <li>Completes QUAL3091.01 for the set</li>
+                            <li>Verifies contract compliance</li>
+                        </ul>
+                        
+                        <strong>Major Revisions:</strong>
+                        <ul>
+                            <li>Use revision block (not review block)</li>
+                            <li>Original signatures remain unchanged</li>
+                            <li>Add sequential revision number/letter</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="step-section">
+                    <div class="step-title">📝 Technical Documents (QUAL3092)</div>
+                    <div class="step-content">
+                        <strong>Process Flow:</strong>
+                        <ul>
+                            <li>Originator completes draft document</li>
+                            <li>Initiates QUAL3092.01 (same form as calculations)</li>
+                            <li>POR assigns reviewers (can be multiple)</li>
+                            <li>Reviewers use Track Changes or mark up PDF</li>
+                            <li>Originator dispositions comments</li>
+                            <li>Editorial review for grammar/format</li>
+                            <li>POR performs final management review</li>
+                            <li>Document authenticated if required</li>
+                        </ul>
+                        
+                        <div class="tip-box">
+                            <strong>💡 TIP:</strong>
+                            Use Track Changes in Word or comment tools in PDF for efficiency. Form QUAL3092.01 can be completed electronically but signatures must not be editable in final version.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-section">
+                    <div class="step-title">🏗️ Construction Submittals (QUAL3093)</div>
+                    <div class="step-content">
+                        <strong>Pre-Review Checks:</strong>
+                        <ul>
+                            <li>Verify contractor has reviewed/approved (required stamp)</li>
+                            <li>Confirm submittal relates to Hanson's design</li>
+                            <li>Categorize as actionable or informational</li>
+                            <li>Log in QUAL3093.01</li>
+                        </ul>
+                        
+                        <strong>Review Process:</strong>
+                        <ul>
+                            <li>Check conformance with design intent only</li>
+                            <li>Apply review stamp or use QUAL3093.02</li>
+                            <li>Do NOT review means/methods</li>
+                            <li>Return with transmittal</li>
+                        </ul>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ CRITICAL:</strong>
+                            If contractor hasn't reviewed submittal first, RETURN WITHOUT REVIEW unless POR provides written waiver.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Requirements Table -->
+            <div class="overview-section">
+                <div class="section-title">
+                    <span class="icon">📊</span>
+                    Summary of Review Requirements
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Document Type</th>
+                            <th>Required Form(s)</th>
+                            <th>Review Documentation</th>
+                            <th>Special Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Calculations</strong></td>
+                            <td>QUAL3090.01</td>
+                            <td>On calculation sheets + form</td>
+                            <td>Spot checks for spreadsheets required</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Drawings</strong></td>
+                            <td>QUAL3091.01 + drawing blocks</td>
+                            <td>On drawing itself</td>
+                            <td>Review block or revision block on each sheet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Documents</strong></td>
+                            <td>QUAL3092.01</td>
+                            <td>Track changes or markups</td>
+                            <td>Editorial review after technical review</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Shop Drawings</strong></td>
+                            <td>QUAL3093.01, .02 or .03</td>
+                            <td>Stamp or form</td>
+                            <td>Contractor must review first</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Delegated Design</strong></td>
+                            <td>QUAL3094.01, .02 or .03</td>
+                            <td>Form (no stamp for nontraditional)</td>
+                            <td>Must have CDOR authentication</td>
+                        </tr>
+                        <tr>
+                            <td><strong>QA Documents</strong></td>
+                            <td>QUAL3110.01</td>
+                            <td>On form sections I-VI</td>
+                            <td>Officer approval required</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Final Notes -->
+            <div class="overview-section">
+                <div class="section-title">
+                    <span class="icon">⚡</span>
+                    Quick Reference Notes
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px;">
+                        <strong>🔄 Independence Rule:</strong><br>
+                        Reviewer must be independent of originator. POR cannot be both.
+                    </div>
+                    
+                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+                        <strong>📁 Records Management:</strong><br>
+                        All completed forms go to project files per QUAL3130.
+                    </div>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                        <strong>🖊️ Digital Signatures:</strong><br>
+                        DocuSign, Adobe, or Bluebeam only. No typed signatures.
+                    </div>
+                    
+                    <div style="background: #fce4ec; padding: 15px; border-radius: 8px;">
+                        <strong>⏱️ Review Timing:</strong><br>
+                        Review must occur before client submittal or use.
+                    </div>
+                </div>
+                
+                <div class="tip-box" style="margin-top: 20px;">
+                    <strong>💡 BEST PRACTICE:</strong>
+                    Start the QA form when you start the document. Don't wait until the end. This ensures proper documentation throughout the process and prevents missing signatures or information.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

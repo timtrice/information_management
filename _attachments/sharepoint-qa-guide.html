@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Review Process - Quick Guide</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .container { max-width: 100%; }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: white;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        
+        .header .subtitle {
+            margin-top: 5px;
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .version-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .main-content {
+            padding: 25px;
+            background: #f8f9fa;
+        }
+        
+        .process-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            color: #0078d4;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            width: 28px;
+            height: 28px;
+            background: #e3f2fd;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .step {
+            background: #f0f7ff;
+            border-left: 4px solid #0078d4;
+            padding: 15px;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,120,212,0.15);
+        }
+        
+        .step-number {
+            background: #0078d4;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 8popupx;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .step-details {
+            font-size: 14px;
+            color: #5a6c7d;
+            margin-left: 32px;
+        }
+        
+        .tip-box {
+            background: #fff9e6;
+            border-left: 4px solid #ffb900;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .tip-box strong {
+            color: #cc8800;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .benefit {
+            text-align: center;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .benefit-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            font-size: 14px;
+        }
+        
+        .footer a {
+            color: #64b5f6;
+            text-decoration: none;
+        }
+        
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .ref-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .ref-icon {
+            font-size: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .steps, .benefits, .quick-ref {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Document Review in SharePoint</h1>
+        </div>
+        
+        <div class="main-content">
+            <!-- FOR REVIEWERS -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">👤</span>
+                    FOR REVIEWERS - Your Daily Workflow
+                </div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Check Email/Teams
+                        </div>
+                        <div class="step-details">
+                            You'll get an automatic notification with a direct link to the document
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Click Review Link
+                        </div>
+                        <div class="step-details">
+                            Opens directly to the document - no searching required
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Review & Comment
+                        </div>
+                        <div class="step-details">
+                            Add comments directly on document. Check the QA boxes that appear
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Click Approve/Reject
+                        </div>
+                        <div class="step-details">
+                            That's it! System records everything automatically
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Time Saver:</strong>
+                    No more printing, no more QA forms, no more filing. Review from anywhere - office, home, or field!
+                </div>
+            </div>
+            
+            <!-- FOR ORIGINATORS -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">✏️</span>
+                    FOR ORIGINATORS - Submitting Documents
+                </div>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Upload to SharePoint
+                        </div>
+                        <div class="step-details">
+                            Drag & drop your document to the project folder
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Fill Quick Info
+                        </div>
+                        <div class="step-details">
+                            Select document type and reviewer from dropdown menus
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Auto-Notification
+                        </div>
+                        <div class="step-details">
+                            System automatically emails reviewer - you're done!
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Track Progress
+                        </div>
+                        <div class="step-details">
+                            See real-time status in the "My Documents" view
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUICK REFERENCE -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">⚡</span>
+                    Quick Reference - Common Tasks
+                </div>
+                
+                <div class="quick-ref">
+                    <div class="ref-item">
+                        <span class="ref-icon">🔍</span>
+                        <div>
+                            <strong>Find a document:</strong><br>
+                            Use search bar or filter by project/date
+                        </div>
+                    </div>
+                    
+                    <div class="ref-item">
+                        <span class="ref-icon">📊</span>
+                        <div>
+                            <strong>Check status:</strong><br>
+                            Look at "Status" column in document library
+                        </div>
+                    </div>
+                    
+                    <div class="ref-item">
+                        <span class="ref-icon">🔄</span>
+                        <div>
+                            <strong>See versions:</strong><br>
+                            Right-click → Version History
+                        </div>
+                    </div>
+                    
+                    <div class="ref-item">
+                        <span class="ref-icon">📝</span>
+                        <div>
+                            <strong>Export QA records:</strong><br>
+                            Click "Export to Excel" for audit trail
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BENEFITS -->
+            <div class="process-section">
+                <div class="section-title">
+                    <span class="icon">✅</span>
+                    What's Better Now?
+                </div>
+                
+                <div class="benefits">
+                    <div class="benefit">
+                        <div class="benefit-icon">⏱️</div>
+                        <strong>75% Faster</strong><br>
+                        No more QUAL forms
+                    </div>
+                    
+                    <div class="benefit">
+                        <div class="benefit-icon">🔒</div>
+                        <strong>Can't Get Lost</strong><br>
+                        Everything tracked digitally
+                    </div>
+                    
+                    <div class="benefit">
+                        <div class="benefit-icon">📱</div>
+                        <strong>Work Anywhere</strong><br>
+                        Review from any device
+                    </div>
+                    
+                    <div class="benefit">
+                        <div class="benefit-icon">♻️</div>
+                        <strong>Auto-Backups</strong><br>
+                        Never lose work again
+                    </div>
+                    
+                    <div class="benefit">
+                        <div class="benefit-icon">📈</div>
+                        <strong>Instant Reports</strong><br>
+                        QA metrics in one click
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
